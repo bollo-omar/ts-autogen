@@ -26,8 +26,8 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "clean": "rimraf dist",
-    "test": "NODE_OPTIONS='--loader tsx' vitest run",
-    "test:watch": "NODE_OPTIONS='--loader tsx' vitest watch",
+    "test": "NODE_OPTIONS='--import tsx' vitest run",
+    "test:watch": "NODE_OPTIONS='--import tsx' vitest watch",
     "check-updates": "node dist/cli/version-check.js --check-updates",
     "postinstall": "node scripts/postinstall.js",
     "prepublishOnly": "npm run clean && npm run build && npm run test"
@@ -35,7 +35,7 @@
   "license": "MIT",
   "type": "module",
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=20.0.0"
   },
   "peerDependencies": {
     "typescript": ">=4.5.0"
