@@ -1,6 +1,6 @@
 {
-  "name": "@bollo-omar/ts-autogen",
-  "version": "0.1.4",
+  "name": "@bollo_omar/ts-autogen",
+  "version": "0.1.5",
   "description": "Lightweight Lombok-like decorators for TypeScript",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -25,14 +25,13 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "clean": "rm -rf dist",
+    "clean": "rimraf dist",
     "test": "vitest run",
     "test:watch": "vitest",
     "check-updates": "node dist/cli/version-check.js --check-updates",
     "postinstall": "node scripts/postinstall.js",
     "prepublishOnly": "npm run clean && npm run build && npm run test"
   },
-
   "license": "MIT",
   "type": "commonjs",
   "engines": {
@@ -43,6 +42,7 @@
   },
   "devDependencies": {
     "@types/node": "^24.3.0",
+    "rimraf": "^6.0.1",
     "typescript": "^5.9.2",
     "vitest": "^3.2.4"
   },

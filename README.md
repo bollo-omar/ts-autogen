@@ -2,7 +2,7 @@
 
 🚀 Lombok-style decorators for TypeScript — generate boilerplate code with **zero configuration**.
 
-[![npm version](https://img.shields.io/npm/v/@bollo-omar/ts-autogen.svg?style=flat-square)](https://www.npmjs.com/package/@bollo-omar/ts-autogen)
+[![npm version](https://img.shields.io/npm/v/@bollo_omar/ts-autogen.svg?style=flat-square)](https://www.npmjs.com/package/@bollo-omar/ts-autogen)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![npm downloads](https://img.shields.io/npm/dm/@bollo-omar/ts-autogen.svg)](https://www.npmjs.com/package/@bollo-omar/ts-autogen)
 
@@ -19,13 +19,13 @@
 ## 📦 Installation
 
 ```bash
-npm install @bollo-omar/ts-autogen@0.1.4
+npm install @bollo_omar/ts-autogen@0.1.5
 ```
 
 ## 🚀 Quick Start
 
 ```typescript
-import { Data, Builder, AllArgsConstructor, Getter, Setter, autogen } from '@bollo-omar/ts-autogen';
+import { Data, Builder, AllArgsConstructor, Getter, Setter, autogen } from '@bollo_omar/ts-autogen';
 
 @Data()
 @Builder()
