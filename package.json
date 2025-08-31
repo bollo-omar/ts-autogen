@@ -26,7 +26,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "clean": "rimraf dist",
-    "test": "vitest run",
+    "test": "vitest run --config vitest.config.ts",
     "test:watch": "vitest",
     "check-updates": "node dist/cli/version-check.js --check-updates",
     "postinstall": "node scripts/postinstall.js",
