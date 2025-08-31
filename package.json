@@ -26,14 +26,14 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "clean": "rimraf dist",
-    "test": "vitest run --config vitest.config.ts",
-    "test:watch": "vitest",
+    "test": "NODE_OPTIONS='--loader tsx' vitest run",
+    "test:watch": "NODE_OPTIONS='--loader tsx' vitest watch",
     "check-updates": "node dist/cli/version-check.js --check-updates",
     "postinstall": "node scripts/postinstall.js",
     "prepublishOnly": "npm run clean && npm run build && npm run test"
   },
   "license": "MIT",
-  "type": "commonjs",
+  "type": "module",
   "engines": {
     "node": ">=14.0.0"
   },
@@ -43,6 +43,7 @@
   "devDependencies": {
     "@types/node": "^24.3.0",
     "rimraf": "^6.0.1",
+    "tsx": "^4.20.5",
     "typescript": "^5.9.2",
     "vitest": "^3.2.4"
   },

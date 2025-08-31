@@ -1,5 +1,5 @@
-/// <reference types="vitest" />
 import { defineConfig } from 'vitest/config';
+import { fileURLToPath } from 'url';
 
 export default defineConfig({
   test: {
@@ -7,5 +7,10 @@ export default defineConfig({
     environment: 'node',
     include: ['**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     watchExclude: ['**/node_modules/**', '**/dist/**'],
-  },
+    setupFiles: [],
+    testTimeout: 10000,
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url))
+    }
+  }
 });
