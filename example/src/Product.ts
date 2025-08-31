@@ -1,11 +1,11 @@
-import {
+import autogen, {
     AllArgsConstructor,
     Builder,
     Data,
     Getter,
-    Setter,
-    autogen
+    Setter
 } from "@bollo-aggrey/ts-autogen";
+
 
 /**
  * Product class demonstrating clean Lombok-style decorators
@@ -67,10 +67,10 @@ console.log('1. Empty product:', emptyProduct.toString());
 // 2. Use fluent builder pattern - CLEAN API!
 const laptopProduct = Product.builder()
     .name('MacBook Pro')
-    .price(2499.99)
+    .price(1999.99)
     .category('Electronics')
-    .quantity(5)
-    .description('High-performance laptop for developers')
+    .quantity(10)
+    .description('Powerful laptop for professionals')
     .build();
 
 console.log('2. Product from builder:', laptopProduct.toString());
