@@ -2,9 +2,9 @@
 
 🚀 Lombok-style decorators for TypeScript — generate boilerplate code with **zero configuration**.
 
-[![npm version](https://img.shields.io/npm/v/@bollo_omar/ts-autogen.svg?style=flat-square)](https://www.npmjs.com/package/@bollo-omar/ts-autogen)
+[![npm version](https://img.shields.io/npm/v/@bollo-aggrey/ts-autogen?style=flat-square&color=blue)](https://www.npmjs.com/package/@bollo-aggrey/ts-autogen)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![npm downloads](https://img.shields.io/npm/dm/@bollo-omar/ts-autogen.svg)](https://www.npmjs.com/package/@bollo-omar/ts-autogen)
+[![npm downloads](https://img.shields.io/npm/dt/@bollo-aggrey/ts-autogen?style=flat-square&color=green)](https://www.npmjs.com/package/@bollo-aggrey/ts-autogen)
 
 ## ✨ Features
 
