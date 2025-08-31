@@ -19,7 +19,7 @@
 ## 📦 Installation
 
 ```bash
-npm install @bollo-omar/ts-autogen
+npm install @bollo-omar/ts-autogen@0.1.4
 ```
 
 ## 🚀 Quick Start
