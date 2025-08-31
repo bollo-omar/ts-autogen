@@ -1,5 +1,5 @@
 {
-  "name": "@bollo-aggrey/ts-autogen",
+  "name": "@bollo-omar/ts-autogen",
   "version": "0.1.4",
   "description": "Lightweight Lombok-like decorators for TypeScript",
   "main": "dist/index.js",
@@ -53,7 +53,7 @@
   ],
   "author": {
     "name": "Aggrey Bollo",
-    "email": "aggrey.bollo@example.com",
+    "email": "bolloaggrey@gmail.com",
     "url": "https://github.com/bollo-omar"
   },
   "keywords": [
