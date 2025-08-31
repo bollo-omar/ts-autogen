@@ -1,0 +1,17 @@
+{
+  "name": "ts-autogen-example",
+  "version": "1.0.0",
+  "description": "Example usage of ts-autogen",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.2",
+    "@types/node": "^24.3.0"
+  },
+  "dependencies": {
+    "@bollo-aggrey/ts-autogen": "file:.."
+  }
+}

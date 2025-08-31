@@ -1,0 +1,56 @@
+{
+  "name": "@bollo-aggrey/ts-autogen",
+  "version": "0.1.2",
+  "description": "Lightweight Lombok-like decorators for TypeScript",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "module": "dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "rm -rf dist",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run clean && npm run build && npm run test"
+  },
+  "keywords": [
+    "typescript",
+    "decorators",
+    "lombok",
+    "lightweight",
+    "autogen",
+    "boilerplate"
+  ],
+  "author": "Aggrey Bollo",
+  "license": "MIT",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "peerDependencies": {
+    "typescript": ">=4.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bollo-aggrey/ts-autogen.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bollo-aggrey/ts-autogen/issues"
+  },
+  "homepage": "https://github.com/bollo-aggrey/ts-autogen#readme"
+}
