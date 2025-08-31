@@ -327,6 +327,64 @@ Run tests:
 npm test
 ```
 
+## 🔔 Version Updates
+
+TypeScript Autogen automatically checks for new versions and notifies you when updates are available.
+
+### Automatic Notifications
+
+The library automatically checks for updates when imported (non-blocking):
+
+```typescript
+import { Data, autogen } from '@bollo-aggrey/ts-autogen';
+// Will show update notification if new version available
+```
+
+### Manual Version Check
+
+Check for updates manually using the CLI:
+
+```bash
+# Check current version
+npx ts-autogen-check --version
+
+# Check for available updates
+npx ts-autogen-check --check-updates
+
+# Or use npm script
+npm run check-updates
+```
+
+### Programmatic Version Check
+
+Check for updates in your code:
+
+```typescript
+import { checkForUpdates, getVersionInfo } from '@bollo-aggrey/ts-autogen';
+
+// Get current version info
+const info = getVersionInfo();
+console.log(`Using ${info.packageName} v${info.version}`);
+
+// Check for updates
+const updateInfo = await checkForUpdates();
+if (updateInfo.hasUpdate) {
+    console.log(`Update available: ${updateInfo.latestVersion}`);
+}
+```
+
+### Environment Variables
+
+Control update checking behavior:
+
+```bash
+# Enable update checks in production
+TS_AUTOGEN_CHECK_UPDATES=true
+
+# Disable automatic checks
+NODE_ENV=production
+```
+
 ## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.

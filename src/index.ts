@@ -14,6 +14,13 @@ export { Value } from "./decorators/value";
 // Export TypeScript utilities
 export { autogen, typed } from "./autogen";
 
+// Export version utilities
+export { checkForUpdates, getVersionInfo } from "./utils/version-checker";
+
+// Auto-check for updates (non-blocking)
+import { notifyIfUpdateAvailable } from "./utils/version-checker";
+notifyIfUpdateAvailable();
+
 // Export types
 export type {
     DataMethods,
