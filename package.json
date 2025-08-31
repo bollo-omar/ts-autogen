@@ -1,6 +1,6 @@
 {
   "name": "@bollo-aggrey/ts-autogen",
-  "version": "0.1.8",
+  "version": "1.0.0",
   "description": "Lightweight Lombok-like decorators for TypeScript",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
