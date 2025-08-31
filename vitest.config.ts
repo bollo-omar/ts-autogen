@@ -6,9 +6,9 @@ export default defineConfig({
     globals: true,
     environment: 'node',
     include: ['**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
-    watchExclude: ['**/node_modules/**', '**/dist/**'],
     setupFiles: [],
     testTimeout: 10000,
+    server: {},
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
