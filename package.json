@@ -1,5 +1,5 @@
 {
-  "name": "@bollo_omar/ts-autogen",
+  "name": "@bollo-aggrey/ts-autogen",
   "version": "0.1.5",
   "description": "Lightweight Lombok-like decorators for TypeScript",
   "main": "dist/index.js",

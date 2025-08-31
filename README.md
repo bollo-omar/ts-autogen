@@ -19,13 +19,13 @@
 ## 📦 Installation
 
 ```bash
-npm install @bollo_omar/ts-autogen@0.1.5
+npm install @bollo-aggrey/ts-autogen@0.1.5
 ```
 
 ## 🚀 Quick Start
 
 ```typescript
-import { Data, Builder, AllArgsConstructor, Getter, Setter, autogen } from '@bollo_omar/ts-autogen';
+import { Data, Builder, AllArgsConstructor, Getter, Setter, autogen } from '@bollo-aggrey/ts-autogen';
 
 @Data()
 @Builder()
