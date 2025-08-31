@@ -14,6 +14,9 @@ export { Value } from "./decorators/value";
 // Export TypeScript utilities
 export { autogen, typed } from "./autogen";
 
+// Default export for backward compatibility
+export { autogen as default } from "./autogen";
+
 // Export version utilities
 export { checkForUpdates, getVersionInfo } from "./utils/version-checker";
 

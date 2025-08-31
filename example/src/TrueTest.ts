@@ -1,21 +1,24 @@
-import {AllArgsConstructor, Builder, Data, Getter, Setter} from "@bollo-aggrey/ts-autogen";
+import {AllArgsConstructor, Builder, Data, Getter, Setter, autogen} from "@bollo-aggrey/ts-autogen";
 
 // Test without any manual method declarations
 @Data()
 @Builder()
 @AllArgsConstructor()
-export class TrueProduct {
+class TrueProductClass {
     @Getter()
     @Setter()
     name: string = '';
-    
+
     @Getter()
     @Setter()
     price: number = 0;
 }
 
+// Enable TypeScript support with autogen
+export const TrueProduct = autogen(TrueProductClass);
+
 // Test the actual runtime behavior
-const product = (TrueProduct as any).builder()
+const product = TrueProduct.builder()
     .name('Test Laptop')
     .price(1299.99)
     .build();
@@ -26,17 +29,17 @@ console.log('Product name:', product.name);
 console.log('Product price:', product.price);
 
 // Test if getter methods actually exist
-console.log('Has getName method:', typeof (product as any).getName === 'function');
-console.log('Has setName method:', typeof (product as any).setName === 'function');
+console.log('Has getName method:', typeof product.getName === 'function');
+console.log('Has setName method:', typeof product.setName === 'function');
 
-if (typeof (product as any).getName === 'function') {
-    console.log('getName() result:', (product as any).getName());
+if (typeof product.getName === 'function') {
+    console.log('getName() result:', product.getName());
 } else {
     console.log('getName() method does NOT exist');
 }
 
-if (typeof (product as any).setName === 'function') {
-    (product as any).setName('Updated Laptop');
+if (typeof product.setName === 'function') {
+    product.setName('Updated Laptop');
     console.log('After setName:', product.name);
 } else {
     console.log('setName() method does NOT exist');

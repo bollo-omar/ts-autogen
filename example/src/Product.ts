@@ -1,9 +1,9 @@
-import autogen, {
+import  {
     AllArgsConstructor,
     Builder,
     Data,
     Getter,
-    Setter
+    Setter, autogen
 } from "@bollo-aggrey/ts-autogen";
 
 
