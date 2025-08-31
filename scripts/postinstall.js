@@ -2,8 +2,12 @@
 
 // Post-install script to welcome users and check for updates
 
-const path = require('path');
-const fs = require('fs');
+import { fileURLToPath } from 'url';
+import path from 'path';
+import { readFileSync, existsSync } from 'fs';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Function to find and read package.json
 function getPackageInfo() {
@@ -15,8 +19,8 @@ function getPackageInfo() {
 
     for (const packagePath of possiblePaths) {
         try {
-            if (fs.existsSync(packagePath)) {
-                const packageJson = JSON.parse(fs.readFileSync(packagePath, 'utf8'));
+            if (existsSync(packagePath)) {
+                const packageJson = JSON.parse(readFileSync(packagePath, 'utf8'));
                 if (packageJson.name === '@bollo-aggrey/ts-autogen') {
                     return packageJson;
                 }
