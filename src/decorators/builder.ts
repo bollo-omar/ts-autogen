@@ -7,11 +7,9 @@ export function Builder() {
                     get(_, prop: string) {
                         if (prop === "build") {
                             return () => {
-                                // Get property names from metadata stored by property decorators
                                 const propertyNames: string[] = [];
                                 const proto = constructor.prototype;
 
-                                // Collect properties from getter/setter metadata in order
                                 if (proto._getterProperties) {
                                     proto._getterProperties.forEach((prop: string) => {
                                         if (!propertyNames.includes(prop)) {
@@ -27,7 +25,6 @@ export function Builder() {
                                     });
                                 }
 
-                                // If no metadata found, try to get properties from a temporary instance
                                 if (propertyNames.length === 0) {
                                     try {
                                         const tempInstance = new constructor();
@@ -37,7 +34,6 @@ export function Builder() {
                                             }
                                         });
                                     } catch {
-                                        // If constructor fails, use the properties from obj
                                         Object.keys(obj).forEach(key => {
                                             if (!propertyNames.includes(key)) {
                                                 propertyNames.push(key);
@@ -46,8 +42,6 @@ export function Builder() {
                                     }
                                 }
 
-                                // Always create instance and set properties
-                                // This approach works regardless of constructor signature
                                 const instance = new ExtendedClass();
                                 Object.keys(obj).forEach(key => {
                                     (instance as any)[key] = obj[key];
@@ -65,7 +59,6 @@ export function Builder() {
             }
         };
 
-        // Copy static methods and properties from original constructor
         Object.getOwnPropertyNames(constructor).forEach(name => {
             if (name !== 'length' && name !== 'name' && name !== 'prototype' && name !== 'builder') {
                 (ExtendedClass as any)[name] = (constructor as any)[name];

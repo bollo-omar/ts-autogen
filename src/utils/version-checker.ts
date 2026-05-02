@@ -1,5 +1,3 @@
-// Version checker utility to notify users of new releases
-
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -15,17 +13,13 @@ interface VersionCheckResult {
     updateMessage?: string;
 }
 
-/**
- * Gets the current package version from package.json
- */
 function getCurrentVersion(): string {
     try {
-        // Try multiple possible locations for package.json
         const possiblePaths = [
-            path.join(__dirname, '../../package.json'),  // From dist/utils/
-            path.join(__dirname, '../package.json'),     // From dist/
-            path.join(process.cwd(), 'package.json'),    // From current working directory
-            path.join(__dirname, '../../../package.json') // From node_modules
+            path.join(__dirname, '../../package.json'),
+            path.join(__dirname, '../package.json'),
+            path.join(process.cwd(), 'package.json'),
+            path.join(__dirname, '../../../package.json')
         ];
 
         for (const packagePath of possiblePaths) {
@@ -41,19 +35,14 @@ function getCurrentVersion(): string {
             }
         }
 
-        // Fallback: return current version if package.json not found
         return '0.1.2';
     } catch {
         return 'unknown';
     }
 }
 
-/**
- * Checks for the latest version from npm registry
- */
 async function getLatestVersion(packageName: string): Promise<string | null> {
     try {
-        // Use fetch if available (Node 18+) or return null for older versions
         if (typeof fetch === 'undefined') {
             return null;
         }
@@ -61,7 +50,7 @@ async function getLatestVersion(packageName: string): Promise<string | null> {
         const response = await fetch(`https://registry.npmjs.org/${packageName}`, {
             method: 'GET',
             headers: { 'Accept': 'application/json' },
-            signal: AbortSignal.timeout(3000) // 3 second timeout
+            signal: AbortSignal.timeout(3000)
         });
 
         if (!response.ok) {
@@ -75,9 +64,6 @@ async function getLatestVersion(packageName: string): Promise<string | null> {
     }
 }
 
-/**
- * Compares two semantic version strings
- */
 function isNewerVersion(current: string, latest: string): boolean {
     const currentParts = current.split('.').map(Number);
     const latestParts = latest.split('.').map(Number);
@@ -93,9 +79,6 @@ function isNewerVersion(current: string, latest: string): boolean {
     return false;
 }
 
-/**
- * Creates an update notification message
- */
 function createUpdateMessage(current: string, latest: string): string {
     return `
 ╭─────────────────────────────────────────────────────────────╮
@@ -112,16 +95,13 @@ function createUpdateMessage(current: string, latest: string): string {
 `;
 }
 
-/**
- * Checks for updates and returns result
- */
 export async function checkForUpdates(): Promise<VersionCheckResult> {
     const currentVersion = getCurrentVersion();
     const packageName = '@bollo-aggrey/ts-autogen';
 
     try {
         const latestVersion = await getLatestVersion(packageName);
-        
+
         if (!latestVersion) {
             return {
                 currentVersion,
@@ -145,31 +125,20 @@ export async function checkForUpdates(): Promise<VersionCheckResult> {
     }
 }
 
-/**
- * Checks for updates and displays notification if available
- * This runs automatically but doesn't block execution
- */
 export function notifyIfUpdateAvailable(): void {
-    // Only check in development or when explicitly enabled
     const shouldCheck = process.env.NODE_ENV !== 'production' || process.env.TS_AUTOGEN_CHECK_UPDATES === 'true';
-    
+
     if (!shouldCheck) return;
 
-    // Run asynchronously without blocking
     checkForUpdates()
         .then(result => {
             if (result.hasUpdate && result.updateMessage) {
                 console.log(result.updateMessage);
             }
         })
-        .catch(() => {
-            // Silently fail - don't interrupt user's workflow
-        });
+        .catch(() => {});
 }
 
-/**
- * Gets current version info
- */
 export function getVersionInfo(): { version: string; packageName: string } {
     return {
         version: getCurrentVersion(),

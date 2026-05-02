@@ -1,19 +1,12 @@
-import  {
+import {
     AllArgsConstructor,
     Builder,
     Data,
     Getter,
-    Setter, autogen
+    Setter,
+    autogenDataBuilder
 } from "@bollo-aggrey/ts-autogen";
 
-
-/**
- * Product class demonstrating clean Lombok-style decorators
- *
- * @Data - Generates getters, setters, toString, and equals methods
- * @Builder - Generates fluent builder pattern
- * @AllArgsConstructor - Generates constructor accepting all properties
- */
 @Data()
 @Builder()
 @AllArgsConstructor()
@@ -38,33 +31,22 @@ class ProductClass {
     @Setter()
     description: string = '';
 
-    /**
-     * Custom business method - works alongside generated methods
-     */
     public save(): string {
         return `Saved product: ${this.name}`;
     }
 
-    /**
-     * Custom validation method
-     */
     public isValid(): boolean {
         return this.name.length > 0 && this.price > 0;
     }
 }
 
-// Enable TypeScript support with one line - abstracts all type casting!
-export const Product = autogen(ProductClass);
-
-// ===== USAGE EXAMPLES =====
+export const Product = autogenDataBuilder(ProductClass);
 
 console.log('🚀 TypeScript Lombok-style Decorators Demo\n');
 
-// 1. Create instance using no-args constructor
 const emptyProduct = new Product();
 console.log('1. Empty product:', emptyProduct.toString());
 
-// 2. Use fluent builder pattern - CLEAN API!
 const laptopProduct = Product.builder()
     .name('MacBook Pro')
     .price(1999.99)
@@ -76,7 +58,6 @@ const laptopProduct = Product.builder()
 console.log('2. Product from builder:', laptopProduct.toString());
 console.log('   Builder product name:', laptopProduct.getName());
 
-// 3. Use all-args constructor - CLEAN API!
 const phoneProduct = new Product(
     'iPhone 15',
     999.99,
@@ -87,24 +68,20 @@ const phoneProduct = new Product(
 
 console.log('3. Product from constructor:', phoneProduct.toString());
 
-// 4. Use generated setter methods - CLEAN API!
 phoneProduct.setPrice(899.99);
 phoneProduct.setQuantity(15);
 
 console.log('4. After using setters:', phoneProduct.toString());
 
-// 5. Use generated getter methods - CLEAN API!
 console.log('5. Using getters:');
 console.log(`   Name: ${phoneProduct.getName()}`);
 console.log(`   Price: $${phoneProduct.getPrice()}`);
 console.log(`   Category: ${phoneProduct.getCategory()}`);
 
-// 6. Test custom methods
 console.log('6. Custom methods:');
 console.log(`   Save result: ${phoneProduct.save()}`);
 console.log(`   Is valid: ${phoneProduct.isValid()}`);
 
-// 7. Test equals method - CLEAN API!
 const duplicatePhone = new Product(
     'iPhone 15',
     899.99,

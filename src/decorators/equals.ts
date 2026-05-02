@@ -4,7 +4,6 @@ export function Equals() {
             equals(other: any) {
                 if (!other || other.constructor !== this.constructor) return false;
 
-                // Compare only non-private properties (not starting with __)
                 const thisKeys = Object.keys(this).filter(k => !k.startsWith('__') && typeof (this as any)[k] !== 'function');
                 const otherKeys = Object.keys(other).filter(k => !k.startsWith('__') && typeof (other as any)[k] !== 'function');
 

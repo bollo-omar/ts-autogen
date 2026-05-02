@@ -26,8 +26,8 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "clean": "rimraf dist",
-    "test": "NODE_OPTIONS='--import tsx' vitest run",
-    "test:watch": "NODE_OPTIONS='--import tsx' vitest watch",
+    "test": "node --import tsx ./node_modules/vitest/vitest.mjs run",
+    "test:watch": "node --import tsx ./node_modules/vitest/vitest.mjs watch",
     "check-updates": "node dist/cli/version-check.js --check-updates",
     "postinstall": "node scripts/postinstall.js",
     "prepublishOnly": "npm run clean && npm run build && npm run test"

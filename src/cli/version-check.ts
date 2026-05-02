@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-// CLI tool for checking version updates
-
 import { checkForUpdates, getVersionInfo } from '../utils/version-checker';
 
 async function main() {
@@ -16,10 +14,10 @@ async function main() {
 
     if (command === '--check-updates' || command === '-u') {
         console.log('🔍 Checking for updates...\n');
-        
+
         try {
             const result = await checkForUpdates();
-            
+
             if (result.hasUpdate) {
                 console.log(result.updateMessage);
             } else {
@@ -32,7 +30,6 @@ async function main() {
         return;
     }
 
-    // Default: show help
     console.log(`
 📦 TypeScript Autogen CLI
 

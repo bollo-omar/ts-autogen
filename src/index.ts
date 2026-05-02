@@ -11,20 +11,25 @@ export {
 } from "./decorators/constructors";
 export { Value } from "./decorators/value";
 
-// Export TypeScript utilities
-export { autogen, typed } from "./autogen";
+export { autogen, autogenDataBuilder, typed } from "./autogen";
 
-// Default export for backward compatibility
+export type {
+    AutogenFeatures,
+    AutogenClass,
+    AugmentedInstance,
+    FluentBuilderFor,
+    NonFnStringKeys,
+    GetterMethods as AutogenGetterMethods,
+    SetterMethods as AutogenSetterMethods
+} from "./autogen-types";
+
 export { autogen as default } from "./autogen";
 
-// Export version utilities
 export { checkForUpdates, getVersionInfo } from "./utils/version-checker";
 
-// Auto-check for updates (non-blocking)
 import { notifyIfUpdateAvailable } from "./utils/version-checker";
 notifyIfUpdateAvailable();
 
-// Export types
 export type {
     DataMethods,
     GetterMethods,
@@ -37,5 +42,3 @@ export type {
     WithAllArgsConstructor,
     LombokStyle
 } from "./types";
-
-

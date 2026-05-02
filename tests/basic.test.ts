@@ -1,6 +1,5 @@
-import { Data, Builder, ToString, Getter, Setter, Value } from '../src/index';
+import { Data, Builder, ToString, Getter, Setter } from '../src/index';
 
-// Test basic @Data decorator
 @Data()
 class User {
     firstName: string = '';
@@ -8,7 +7,6 @@ class User {
     age: number = 0;
 }
 
-// Test @Builder decorator
 @Builder()
 class Product {
     @Getter()
@@ -18,7 +16,6 @@ class Product {
     price: number = 0;
 }
 
-// Test @ToString decorator
 @ToString()
 class SimpleClass {
     name: string = 'test';

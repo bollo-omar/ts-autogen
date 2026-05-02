@@ -1,42 +1,37 @@
 import { Data, Builder, ToString, Value, autogen } from '@bollo-aggrey/ts-autogen';
 
-// Test @Data decorator
 @Data()
 class UserClass {
     firstName: string = '';
     lastName: string = '';
     age: number = 0;
 }
-// Enable TypeScript support with autogen
-const User = autogen(UserClass);
+const User = autogen(UserClass, { data: true } as const);
 
-// Test @Builder decorator
 @Builder()
 class ProductClass {
     name: string = '';
     price: number = 0;
     category: string = '';
 }
-// Enable TypeScript support with autogen
-const Product = autogen(ProductClass);
+const Product = autogen(ProductClass, { builder: true } as const);
 
-// Test @ToString decorator
 @ToString()
 class SimpleItemClass {
     id: number = 1;
     name: string = 'test';
 }
-// Enable TypeScript support with autogen
-const SimpleItem = autogen(SimpleItemClass);
+const SimpleItem = autogen(SimpleItemClass, { instanceToString: true } as const);
 
-// Test @Value decorator (immutable)
 @Value()
 class ImmutableConfigClass {
     apiUrl: string = 'https://api.example.com';
     timeout: number = 5000;
 }
-// Enable TypeScript support with autogen
-const ImmutableConfig = autogen(ImmutableConfigClass);
+const ImmutableConfig = autogen(ImmutableConfigClass, {
+    instanceToString: true,
+    instanceEquals: true
+} as const);
 
 function main() {
     console.log('=== Testing @Data decorator ===');
@@ -72,7 +67,6 @@ function main() {
     console.log('Config apiUrl:', config.apiUrl);
     console.log('Config timeout:', config.timeout);
 
-    // Try to modify an immutable object (should not work)
     try {
         (config as any).apiUrl = 'https://hacker.com';
         console.log('WARNING: Immutable object was modified!');

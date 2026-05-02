@@ -1,6 +1,12 @@
-import {AllArgsConstructor, Builder, Data, Getter, Setter, autogen} from "@bollo-aggrey/ts-autogen";
+import {
+    AllArgsConstructor,
+    Builder,
+    Data,
+    Getter,
+    Setter,
+    autogenDataBuilder
+} from "@bollo-aggrey/ts-autogen";
 
-// Test without any manual method declarations
 @Data()
 @Builder()
 @AllArgsConstructor()
@@ -14,10 +20,8 @@ class TrueProductClass {
     price: number = 0;
 }
 
-// Enable TypeScript support with autogen
-export const TrueProduct = autogen(TrueProductClass);
+export const TrueProduct = autogenDataBuilder(TrueProductClass);
 
-// Test the actual runtime behavior
 const product = TrueProduct.builder()
     .name('Test Laptop')
     .price(1299.99)
@@ -28,7 +32,6 @@ console.log('Product from builder:', product);
 console.log('Product name:', product.name);
 console.log('Product price:', product.price);
 
-// Test if getter methods actually exist
 console.log('Has getName method:', typeof product.getName === 'function');
 console.log('Has setName method:', typeof product.setName === 'function');
 

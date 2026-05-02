@@ -1,6 +1,6 @@
 # TypeScript Autogen
 
-🚀 Lombok-style decorators for TypeScript — Generate clean, type-safe boilerplate code with **zero configuration**. Works with both ESM and CommonJS modules.
+🚀 Lombok-style decorators for TypeScript — reduce boilerplate for getters, setters, builders, and related helpers. Works with both ESM and CommonJS modules.
 
 [![npm version](https://img.shields.io/npm/v/@bollo-aggrey/ts-autogen?style=flat-square&color=blue)](https://www.npmjs.com/package/@bollo-aggrey/ts-autogen)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -8,27 +8,27 @@
 
 ## ✨ Features
 
-- 🏗️ `@Data` – Generates getters, setters, `toString`, `equals`, and `hashCode`
+- 🏗️ `@Data` – Generates getters, setters, `toString`, and `equals`
 - 🔧 `@Builder` – Fluent builder pattern with type-safe method chaining
 - 📝 `@Getter` / `@Setter` – Fine-grained property access control
-- 🔍 `@ToString` / `@Equals` / `@HashCode` – Complete object utilities
+- 🔍 `@ToString` / `@Equals` – Object string and equality helpers
 - 🏭 `@AllArgsConstructor` / `@NoArgsConstructor` / `@RequiredArgsConstructor` – Flexible constructor generation
 - 🔒 `@Value` – Immutable objects with `readonly` properties
-- 🚀 `@With` – Immutable 'wither' methods for functional updates
-- 🎯 Full TypeScript Support with IntelliSense and type inference
-- ⚡ Zero runtime overhead – Compile-time transformations only
+- 🎯 TypeScript: opt-in typings for generated APIs via `autogen` / `autogenDataBuilder` (see below)
 - 🔄 Automatic version checking to keep your decorators up-to-date
+
+## What was fixed
+
+- **`autogen()` typing** – Previously `autogen` was typed to return `any`, so editors could not complete `builder()`, getters, setters, etc. You now pass a small **feature map** (with `as const`) that matches your decorators, or use **`autogenDataBuilder()`** for the common `@Data()` + `@Builder()` stack. Exported types include `AutogenFeatures`, `AutogenClass`, `AugmentedInstance`, and `FluentBuilderFor`.
+- **README accuracy** – Decorators apply behavior at **runtime** (prototype / class wrapping), not via a separate compile-time code generator. Earlier wording implied zero runtime cost and compile-only transforms; that was incorrect.
+- **`npm test` on Windows** – The test script no longer relies on Unix-style `NODE_OPTIONS='...'`; it uses `node --import tsx` so tests run on Windows and Unix.
+- **Stray markdown** – Removed a duplicate closing fence in the Advanced Usage example.
 
 ## 📦 Installation
 
 ```bash
-# Using npm
 npm install @bollo-aggrey/ts-autogen
-
-# Using yarn
 yarn add @bollo-aggrey/ts-autogen
-
-# Using pnpm
 pnpm add @bollo-aggrey/ts-autogen
 ```
 
@@ -39,9 +39,15 @@ pnpm add @bollo-aggrey/ts-autogen
 ### Basic Usage
 
 ```typescript
-import { Data, Builder, AllArgsConstructor, Getter, Setter, autogen } from '@bollo-aggrey/ts-autogen';
+import {
+  Data,
+  Builder,
+  AllArgsConstructor,
+  Getter,
+  Setter,
+  autogenDataBuilder
+} from '@bollo-aggrey/ts-autogen';
 
-// Define your class with decorators
 @Data()
 @Builder()
 @AllArgsConstructor()
@@ -50,56 +56,56 @@ class ProductClass {
   @Getter() @Setter() price: number = 0;
   @Getter() @Setter() category: string = '';
 
-  // Custom methods are preserved
   public save(): string {
     return `Saved product: ${this.name}`;
   }
 }
 
-// Create the enhanced class
-export const Product = autogen(ProductClass);
+export const Product = autogenDataBuilder(ProductClass);
 
-// Usage
 const laptop = Product.builder()
   .name('MacBook Pro')
   .price(2499.99)
   .category('Electronics')
   .build();
 
-console.log(laptop.getName()); // "MacBook Pro"
-console.log(laptop.toString()); // "ProductClass(name=MacBook Pro, price=2499.99, category=Electronics)"
-
-// Immutable updates with @With
-const updatedLaptop = laptop.withName('MacBook Pro M2');
+console.log(laptop.getName());
+console.log(laptop.toString());
 ```
 
-### Advanced Usage
+### Typing generated APIs (`autogen`)
+
+TypeScript does not infer methods added by decorators. Use either:
+
+- **`autogenDataBuilder(MyClass)`** when you use `@Data()` and `@Builder()` together (same typings as `autogen(MyClass, { builder: true, data: true } as const)`).
+- **`autogen(MyClass, features as const)`** with flags that match your stack, for example `{ builder: true }`, `{ data: true }`, `{ instanceToString: true }`, `{ instanceEquals: true }` (the last two avoid clashing with `Object.prototype.toString` in the type map).
+
+`autogen(MyClass)` with one argument still returns `MyClass` unchanged for typing: add the second argument when you want completions for generated members.
+
+### Advanced usage
 
 ```typescript
-import { Value, Builder, With, autogen } from '@bollo-aggrey/ts-autogen';
+import { Value, Builder, Getter, autogen } from '@bollo-aggrey/ts-autogen';
 
-// Create an immutable value object
 @Value()
 @Builder()
 class ImmutablePoint {
-  @With() readonly x: number;
-  @With() readonly y: number;
-  
-  // Custom methods are preserved
+  @Getter() x: number = 0;
+  @Getter() y: number = 0;
+
   distanceToOrigin(): number {
     return Math.sqrt(this.x * this.x + this.y * this.y);
   }
 }
 
-const Point = autogen(ImmutablePoint);
+const Point = autogen(ImmutablePoint, {
+  builder: true,
+  instanceToString: true,
+  instanceEquals: true
+} as const);
 
 const point = Point.builder().x(3).y(4).build();
-console.log(point.distanceToOrigin()); // 5
-
-// Create a new instance with updated values
-const movedPoint = point.withX(5).withY(12);
-console.log(movedPoint.distanceToOrigin()); // 13
-```
+console.log(point.distanceToOrigin());
 ```
 
 ## 📚 Complete Decorator Reference
@@ -115,7 +121,7 @@ class User {
 
 const user = new User();
 user.setEmail('test@example.com');
-console.log(user.getEmail()); // "test@example.com"
+console.log(user.getEmail());
 ```
 
 ### `@ToString`
@@ -129,15 +135,14 @@ class Point {
 }
 
 const point = new Point();
-console.log(point.toString()); // "Point(x=0, y=0)"
+console.log(point.toString());
 ```
 
-### `@Equals` and `@HashCode`
-Generate `equals()` and `hashCode()` methods.
+### `@Equals`
+Generates an `equals()` method (value objects often pair this with `@ToString()` or use `@Value()` which applies both).
 
 ```typescript
 @Equals()
-@HashCode()
 class User {
   id: number = 0;
   name: string = '';
@@ -151,23 +156,7 @@ const user2 = new User();
 user2.id = 1;
 user2.name = 'Alice';
 
-console.log(user1.equals(user2)); // true
-```
-
-### `@With`
-Generates 'wither' methods for immutable updates.
-
-```typescript
-@Value()
-class Config {
-  @With() readonly host: string = 'localhost';
-  @With() readonly port: number = 3000;
-}
-
-const config = new Config();
-const updated = config
-  .withHost('example.com')
-  .withPort(8080);
+console.log(user1.equals(user2));
 ```
 
 ### `@RequiredArgsConstructor`
@@ -181,7 +170,6 @@ class User {
   private readonly optional?: string;
 }
 
-// Only required parameters in constructor
 const user = new User(1, 'Alice');
 ```
 
@@ -189,33 +177,38 @@ const user = new User(1, 'Alice');
 Combines `@Getter`, `@Setter`, `@ToString`, and `@Equals`.
 
 ```typescript
+import { Data, Getter, Setter, autogen } from '@bollo-aggrey/ts-autogen';
+
 @Data()
 class User {
   @Getter() @Setter() name: string = '';
   @Getter() @Setter() email: string = '';
 }
 
-const UserModel = autogen(User);
-// → getName(), setName(), getEmail(), setEmail(), toString(), equals()
+const UserModel = autogen(User, { data: true } as const);
 ```
 
 ### `@Builder()`
 Generates a fluent builder.
 
 ```typescript
+import { Builder, Getter, autogen } from '@bollo-aggrey/ts-autogen';
+
 @Builder()
 class Config {
   @Getter() host: string = '';
   @Getter() port: number = 0;
 }
 
-const ConfigModel = autogen(Config);
+const ConfigModel = autogen(Config, { builder: true } as const);
 const config = ConfigModel.builder().host('localhost').port(3000).build();
 ```
 
 ### `@AllArgsConstructor()` / `@NoArgsConstructor()`
 
 ```typescript
+import { AllArgsConstructor, NoArgsConstructor, Getter, Builder, autogen } from '@bollo-aggrey/ts-autogen';
+
 @AllArgsConstructor()
 @NoArgsConstructor()
 class Point {
@@ -223,9 +216,9 @@ class Point {
   @Getter() y: number = 0;
 }
 
-const PointModel = autogen(Point);
+const PointModel = autogen(Point, { builder: true } as const);
 const point1 = new PointModel(10, 20);
-const point2 = new PointModel(); // no-arg
+const point2 = new PointModel();
 ```
 
 ## ⚙️ Configuration
@@ -262,9 +255,9 @@ npx ts-autogen-check --check-updates
 ## 🎯 Why Use TypeScript Autogen?
 
 - ✅ **Reduced Boilerplate** - Generate common methods automatically
-- ✅ **Type Safety** - Full TypeScript support with IntelliSense
+- ✅ **Type safety** - Strong typings when you use `autogen` / `autogenDataBuilder` with a matching feature map
 - ✅ **Familiar API** - Similar to Java Lombok for easy adoption
-- ✅ **Zero Runtime Overhead** - All transformations happen at compile-time
+- ✅ **Runtime decorators** - Generated members are attached when the class is defined (no separate build plugin required)
 - ✅ **Immutability Support** - First-class support for immutable data structures
 - ✅ **Framework Agnostic** - Works with any TypeScript project
 - ✅ **Automatic Updates** - Built-in version checking to keep you up-to-date
