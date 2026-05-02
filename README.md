@@ -24,6 +24,8 @@
 - **`npm test` on Windows** – The test script no longer relies on Unix-style `NODE_OPTIONS='...'`; it uses `node --import tsx` so tests run on Windows and Unix.
 - **Stray markdown** – Removed a duplicate closing fence in the Advanced Usage example.
 
+**1.1.0** ships the typed `autogen` / `autogenDataBuilder` APIs, README corrections, Windows-friendly `npm test`, and the related cleanup.
+
 ## 📦 Installation
 
 ```bash

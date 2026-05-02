@@ -29,7 +29,7 @@ function getPackageInfo() {
 
     return {
         name: '@bollo-aggrey/ts-autogen',
-        version: '0.1.2'
+        version: '1.1.0'
     };
 }
 

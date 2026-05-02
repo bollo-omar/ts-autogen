@@ -35,7 +35,7 @@ function getCurrentVersion(): string {
             }
         }
 
-        return '0.1.2';
+        return '1.1.0';
     } catch {
         return 'unknown';
     }
