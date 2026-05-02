@@ -14,6 +14,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# npm auth (never commit tokens)
+.npmrc
+
 # Environment variables
 .env
 .env.local
